@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware  # 👈 CORS middleware import
 from pydantic import BaseModel
 from typing import Optional
 import json
@@ -10,6 +11,15 @@ with open("posts_data.json", "r", encoding="utf-8") as f:
     posts_data = json.load(f)
 
 app = FastAPI()
+
+# ✅ Enable CORS for React frontend (localhost:3000)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Replace "*" with ["http://localhost:3000"] for stricter control
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Query(BaseModel):
     question: str

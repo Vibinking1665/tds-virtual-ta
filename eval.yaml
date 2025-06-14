@@ -1,0 +1,40 @@
+name: virtual-ta-eval
+description: Evaluates the TDS Virtual TA API with sample queries
+prompts:
+  - name: basics-question
+    description: Basic programming question
+    vars:
+      question: "What is the difference between a list and a tuple in Python?"
+
+  - name: html-question
+    description: HTML-related discussion
+    vars:
+      question: "How do I center a div using CSS?"
+
+  - name: exam-question
+    description: IITM exam-related post
+    vars:
+      question: "Where can I find the quiz 3 solutions for DBMS?"
+
+providers:
+  - id: my-api
+    provider: api
+    config:
+      url: https://tds-virtual-ta-rczb.onrender.com/api/
+      method: POST
+      headers:
+        Content-Type: application/json
+      body: |
+        {
+          "question": "{{ question }}"
+        }
+
+tests:
+  - prompt: basics-question
+    provider: my-api
+
+  - prompt: html-question
+    provider: my-api
+
+  - prompt: exam-question
+    provider: my-api
